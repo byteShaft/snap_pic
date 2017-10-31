@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -18,7 +18,7 @@ import io.crossbar.autobahn.wamp.Session;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton imageButton;
+    private ImageView imageButton;
     private static final int CAMERA_REQUEST = 1;
 
     @Override
