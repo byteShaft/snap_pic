@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println(ipAddress +  "    "  +  realm);
+        System.out.println(ipAddress + "    " + realm);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         imageButton = findViewById(R.id.image_button);
@@ -60,19 +60,20 @@ public class MainActivity extends AppCompatActivity {
             session.addOnJoinListener((session1, details) -> {
                 CompletableFuture<List<Map<String, Integer>>> res = session1.call(
                         "io.crossbar.detect_faces",
-                        new TypeReference<List<Map<String, Integer>>>() {}, null, byteArray);
+                        new TypeReference<List<Map<String, Integer>>>() {
+                        }, null, byteArray);
                 res.whenComplete((cords, throwable) -> {
                     if (throwable != null) {
                         throwable.printStackTrace();
                     } else {
-                        for (Map<String, Integer> co: cords) {
+                        for (Map<String, Integer> co : cords) {
                             test(canvas, co);
                         }
                         imageButton.setImageBitmap(altered);
                     }
                 });
             });
-            Client client = new Client(session, "ws://192.168.1.8:8080/ws", "realm1");
+            Client client = new Client(session, ipAddress, realm);
             client.connect().whenComplete((exitInfo, throwable) -> System.out.println(exitInfo));
         }
     }
@@ -101,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            AppGlobals.clearSettings();
             startActivity(new Intent(MainActivity.this, DetailsActivity.class));
+            finish();
             return true;
         }
 

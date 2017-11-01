@@ -18,10 +18,9 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         etIpAddress = findViewById(R.id.ip_address);
-        if (AppGlobals.isFirstTimeLaunch()) {
-            startActivity(new Intent(DetailsActivity.this, MainActivity.class));
-        }
         etRealm = findViewById(R.id.realm);
+        etIpAddress.setText(AppGlobals.getStringFromSharedPreferences("ip"));
+        etRealm.setText(AppGlobals.getStringFromSharedPreferences("realm"));
         buttonSave = findViewById(R.id.button_save);
 
 
