@@ -9,6 +9,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -25,11 +28,17 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView imageButton;
     private static final int CAMERA_REQUEST = 1;
+    String ipAddress = AppGlobals.getStringFromSharedPreferences("ip");
+    String realm = AppGlobals.getStringFromSharedPreferences("realm");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println(ipAddress +  "    "  +  realm);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         imageButton = findViewById(R.id.image_button);
         imageButton.setOnClickListener(v -> {
             Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -74,5 +83,29 @@ public class MainActivity extends AppCompatActivity {
         myPaint.setColor(Color.rgb(255, 0, 0));
         myPaint.setStrokeWidth(1);
         c.drawRect(co.get("x"), co.get("y"), co.get("x") + co.get("w"), co.get("y") + co.get("h"), myPaint);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            AppGlobals.clearSettings();
+            startActivity(new Intent(MainActivity.this, DetailsActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
